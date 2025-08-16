@@ -310,8 +310,10 @@ elif section == "About":
     - Add HR policy simulations
     - Fairness & bias checks
     - Connect to engagement data
-    WITH LOVE: OL PIONEER
+    
+    - WITH LOVE: OL PIONEER
     """)
+
 
 
 
