@@ -286,33 +286,33 @@ elif section == "Download Artifacts":
 
 # ========================= ABOUT =========================
 elif section == "About":
-import streamlit as st
-def section_title(title: str, subtitle: str = ""):
-    st.subheader(title)
-    if subtitle:
-    st.write(subtitle)
+    import streamlit as st
 
-section_title("About this App")
-st.write("""
- **Project Style & Syntax**
-- Focused on **who avoids treatment**, **policy impacts**, and **actionable personas**.
-- Clean handling of **age/sex anomalies**, with robust imputations.
-- Visuals via **Plotly** for interactive analysis; Matplotlib/Seaborn optional.
-- Models wrapped in **sklearn Pipelines** to keep preprocessing & inference consistent.
-    
-**Personas**
- - *Silent Sufferers*: Low openness/support signals, prior issues highest risk of not seeking help.
- - *Open Advocates*: Comfortable discussing mental health, supported by managers & benefits.
- - *Under-Supported Professionals*: Will engage if support improves; target with benefits & manager training.
- - *Supported & Aware*: Doing fine; maintain best practices and continuous feedback loops.
-    
- **Next Steps**
- - Integrate HR policy simulations (what-if benefits, leave flexibility).
- - Add fairness & bias checks across demographics.
-- Connect to anonymized engagement data for drift monitoring.
+    def section_title(title: str, subtitle: str = ""):
+        st.subheader(title)
+        if subtitle:
+            st.write(subtitle)
 
- WITH LOVE OPEN LEARN'S PIONEERS✨
-                """)
+    section_title("About this App")
+    st.write("""
+    **Project Style & Syntax**
+    - Focused on who avoids treatment, policy impacts, and actionable personas.
+    - Models wrapped in sklearn Pipelines for consistency.
+    - Visuals via Plotly, Matplotlib, Seaborn.
+    
+    **Personas**
+    - Silent Sufferers
+    - Open Advocates
+    - Under-Supported Professionals
+    - Supported & Aware
+    
+    **Next Steps**
+    - Add HR policy simulations
+    - Fairness & bias checks
+    - Connect to engagement data
+    WITH LOVE: OL PIONEER
+    """)
+
 
 
 
