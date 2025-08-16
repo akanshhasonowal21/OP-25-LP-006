@@ -153,6 +153,7 @@ if section == "Overview":
 # -------------------- EDA WITH INSIGHTS --------------------
 elif section == "Canvas of the Dataset":
     st.title("📊 Data Exploration")
+
     plot_choice = st.radio(
         "Select a visualization:",
         [
@@ -165,88 +166,89 @@ elif section == "Canvas of the Dataset":
             "Correlation Heatmap"
         ]
     )
-   fig, ax = plt.subplots(figsize=SMALL_FIGSIZE)
-insight_text = ""
 
-# Ensure treatment is numeric (0/1)
-if df['treatment'].dtype == 'object':
-    df['treatment'] = df['treatment'].map({'Yes': 1, 'No': 0})
+    fig, ax = plt.subplots(figsize=SMALL_FIGSIZE)
+    insight_text = ""
 
-if plot_choice == "Number of Employees by Treatment":
-    sns.countplot(data=df, x='no_employees', hue='treatment', palette='pastel', ax=ax)
-    group_rates = df.groupby('no_employees')['treatment'].value_counts(normalize=True).unstack().fillna(0)
-    if not group_rates.empty:
-        if 1 in group_rates.columns:
-            top_group = group_rates[1].idxmax()
-            top_rate = group_rates.loc[top_group, 1] * 100
+    # Ensure treatment is numeric (0/1)
+    if df['treatment'].dtype == 'object':
+        df['treatment'] = df['treatment'].map({'Yes': 1, 'No': 0})
+
+    if plot_choice == "Number of Employees by Treatment":
+        sns.countplot(data=df, x='no_employees', hue='treatment', palette='pastel', ax=ax)
+        group_rates = df.groupby('no_employees')['treatment'].value_counts(normalize=True).unstack().fillna(0)
+        if not group_rates.empty:
+            if 1 in group_rates.columns:
+                top_group = group_rates[1].idxmax()
+                top_rate = group_rates.loc[top_group, 1] * 100
+            else:
+                top_group = group_rates.iloc[:, 0].idxmax()
+                top_rate = group_rates.iloc[:, 0].max() * 100
+            insight_text = f"💡 Employees in companies with **{top_group}** employees have the highest treatment-seeking rate at **{top_rate:.1f}%**."
         else:
-            top_group = group_rates.iloc[:, 0].idxmax()
-            top_rate = group_rates.iloc[:, 0].max() * 100
-        insight_text = f"💡 Employees in companies with **{top_group}** employees have the highest treatment-seeking rate at **{top_rate:.1f}%**."
-    else:
-        insight_text = "⚠️ Not enough data to calculate treatment rates."
+            insight_text = "⚠️ Not enough data to calculate treatment rates."
 
-elif plot_choice == "Age by Treatment":
-    sns.histplot(data=df, x='Age', hue='treatment', multiple='dodge', palette='Set2', ax=ax)
-    avg_age_yes = df.loc[df['treatment'] == 1, 'Age'].dropna().mean()
-    avg_age_no = df.loc[df['treatment'] == 0, 'Age'].dropna().mean()
-    if pd.notna(avg_age_yes) and pd.notna(avg_age_no):
-        insight_text = f"💡 Average age of those seeking treatment is **{avg_age_yes:.1f}**, compared to **{avg_age_no:.1f}**."
-    else:
-        insight_text = "⚠️ Not enough data to calculate age averages."
-
-elif plot_choice == "Work Interference (Pie Chart)":
-    counts = df['work_interfere'].dropna().value_counts()
-    if not counts.empty:
-        ax.pie(counts, labels=counts.index, autopct='%1.1f%%', colors=sns.color_palette('pastel'))
-        top_category = counts.idxmax()
-        top_percent = counts.max() / counts.sum() * 100
-        insight_text = f"💡 Most common work interference level: **{top_category}** ({top_percent:.1f}% of respondents)."
-    else:
-        insight_text = "⚠️ No data available for work interference."
-
-elif plot_choice == "Sex by Tech Company":
-    sns.countplot(data=df, x='Sex', hue='tech_company', palette='coolwarm', ax=ax)
-    if not df[df['tech_company'] == 1].empty:
-        tech_male_ratio = df[df['tech_company'] == 1]['Sex'].value_counts(normalize=True).max() * 100
-        insight_text = f"💡 In tech companies, the largest gender group makes up **{tech_male_ratio:.1f}%** of employees."
-    else:
-        insight_text = "⚠️ No data for tech company employees."
-
-elif plot_choice == "Age by Company Size":
-    sns.boxplot(data=df, x='no_employees', y='Age', palette='viridis', ax=ax)
-    if not df['no_employees'].dropna().empty:
-        youngest_group = df.groupby('no_employees')['Age'].median().idxmin()
-        insight_text = f"💡 Youngest median age is in companies with **{youngest_group}** employees."
-    else:
-        insight_text = "⚠️ No company size data available."
-
-elif plot_choice == "Age by Treatment":
-    sns.violinplot(data=df, x='treatment', y='Age', palette='muted', ax=ax)
-    if not df['Age'].dropna().empty:
-        youngest_treatment = df.groupby('treatment')['Age'].median().idxmin()
-        insight_text = f"💡 {'Those not seeking treatment' if youngest_treatment == 0 else 'Those seeking treatment'} tend to be younger."
-    else:
-        insight_text = "⚠️ No age data available."
-
-elif plot_choice == "Correlation Heatmap":
-    corr = df.corr(numeric_only=True)
-    if not corr.empty:
-        sns.heatmap(corr, annot=True, cmap='coolwarm', ax=ax)
-        corr_unstacked = corr.unstack().dropna()
-        corr_unstacked = corr_unstacked[corr_unstacked < 1]  # exclude self-correlation
-        if not corr_unstacked.empty:
-            strongest_pos = corr_unstacked.idxmax()
-            strongest_neg = corr_unstacked.idxmin()
-            insight_text = f"💡 Strongest positive correlation: **{strongest_pos[0]}** & **{strongest_pos[1]}**; strongest negative correlation: **{strongest_neg[0]}** & **{strongest_neg[1]}**."
+    elif plot_choice == "Age by Treatment":
+        sns.histplot(data=df, x='Age', hue='treatment', multiple='dodge', palette='Set2', ax=ax)
+        avg_age_yes = df.loc[df['treatment'] == 1, 'Age'].dropna().mean()
+        avg_age_no = df.loc[df['treatment'] == 0, 'Age'].dropna().mean()
+        if pd.notna(avg_age_yes) and pd.notna(avg_age_no):
+            insight_text = f"💡 Average age of those seeking treatment is **{avg_age_yes:.1f}**, compared to **{avg_age_no:.1f}**."
         else:
-            insight_text = "⚠️ No valid correlations found."
-    else:
-        insight_text = "⚠️ Not enough numeric data for correlation heatmap."
+            insight_text = "⚠️ Not enough data to calculate age averages."
 
-st.pyplot(fig, use_container_width=False)
-if insight_text:
-    st.info(insight_text)
+    elif plot_choice == "Work Interference (Pie Chart)":
+        counts = df['work_interfere'].dropna().value_counts()
+        if not counts.empty:
+            ax.pie(counts, labels=counts.index, autopct='%1.1f%%', colors=sns.color_palette('pastel'))
+            top_category = counts.idxmax()
+            top_percent = counts.max() / counts.sum() * 100
+            insight_text = f"💡 Most common work interference level: **{top_category}** ({top_percent:.1f}% of respondents)."
+        else:
+            insight_text = "⚠️ No data available for work interference."
+
+    elif plot_choice == "Sex by Tech Company":
+        sns.countplot(data=df, x='Sex', hue='tech_company', palette='coolwarm', ax=ax)
+        if not df[df['tech_company'] == 1].empty:
+            tech_male_ratio = df[df['tech_company'] == 1]['Sex'].value_counts(normalize=True).max() * 100
+            insight_text = f"💡 In tech companies, the largest gender group makes up **{tech_male_ratio:.1f}%** of employees."
+        else:
+            insight_text = "⚠️ No data for tech company employees."
+
+    elif plot_choice == "Age by Company Size":
+        sns.boxplot(data=df, x='no_employees', y='Age', palette='viridis', ax=ax)
+        if not df['no_employees'].dropna().empty:
+            youngest_group = df.groupby('no_employees')['Age'].median().idxmin()
+            insight_text = f"💡 Youngest median age is in companies with **{youngest_group}** employees."
+        else:
+            insight_text = "⚠️ No company size data available."
+
+    elif plot_choice == "Age by Treatment":
+        sns.violinplot(data=df, x='treatment', y='Age', palette='muted', ax=ax)
+        if not df['Age'].dropna().empty:
+            youngest_treatment = df.groupby('treatment')['Age'].median().idxmin()
+            insight_text = f"💡 {'Those not seeking treatment' if youngest_treatment == 0 else 'Those seeking treatment'} tend to be younger."
+        else:
+            insight_text = "⚠️ No age data available."
+
+    elif plot_choice == "Correlation Heatmap":
+        corr = df.corr(numeric_only=True)
+        if not corr.empty:
+            sns.heatmap(corr, annot=True, cmap='coolwarm', ax=ax)
+            corr_unstacked = corr.unstack().dropna()
+            corr_unstacked = corr_unstacked[corr_unstacked < 1]  # exclude self-correlation
+            if not corr_unstacked.empty:
+                strongest_pos = corr_unstacked.idxmax()
+                strongest_neg = corr_unstacked.idxmin()
+                insight_text = f"💡 Strongest positive correlation: **{strongest_pos[0]}** & **{strongest_pos[1]}**; strongest negative correlation: **{strongest_neg[0]}** & **{strongest_neg[1]}**."
+            else:
+                insight_text = "⚠️ No valid correlations found."
+        else:
+            insight_text = "⚠️ Not enough numeric data for correlation heatmap."
+
+    st.pyplot(fig, use_container_width=False)
+    if insight_text:
+        st.info(insight_text)
 
 
 # -------------------- SUPERVISED MODEL --------------------
@@ -357,6 +359,7 @@ elif section == "About":
     ---  
     💖 *Made with love by Open Learn's Pioneer ✨*
     """)
+
 
 
 
