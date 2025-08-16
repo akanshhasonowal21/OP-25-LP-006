@@ -286,32 +286,33 @@ elif section == "Download Artifacts":
 
 # ========================= ABOUT =========================
 elif section == "About":
-    import streamlit as st
-    def section_title(title: str, subtitle: str = ""):
-        st.subheader(title)
-        if subtitle:
-            st.write(subtitle)
+import streamlit as st
+def section_title(title: str, subtitle: str = ""):
+    st.subheader(title)
+    if subtitle:
+    st.write(subtitle)
 
-        section_title("About this App")
-        st.write("""
-          **Project Style & Syntax**
-                  - Focused on **who avoids treatment**, **policy impacts**, and **actionable personas**.
-                  - Clean handling of **age/sex anomalies**, with robust imputations.
-                  - Visuals via **Plotly** for interactive analysis; Matplotlib/Seaborn optional.
-                  - Models wrapped in **sklearn Pipelines** to keep preprocessing & inference consistent.
+section_title("About this App")
+st.write("""
+ **Project Style & Syntax**
+- Focused on **who avoids treatment**, **policy impacts**, and **actionable personas**.
+- Clean handling of **age/sex anomalies**, with robust imputations.
+- Visuals via **Plotly** for interactive analysis; Matplotlib/Seaborn optional.
+- Models wrapped in **sklearn Pipelines** to keep preprocessing & inference consistent.
     
-                   **Personas (plain-English)**
-                   - *Silent Sufferers*: Low openness/support signals, prior issues highest risk of not seeking help.
-                   - *Open Advocates*: Comfortable discussing mental health, supported by managers & benefits.
-                   - *Under-Supported Professionals*: Will engage if support improves; target with benefits & manager training.
-                   - *Supported & Aware*: Doing fine; maintain best practices and continuous feedback loops.
+**Personas**
+ - *Silent Sufferers*: Low openness/support signals, prior issues highest risk of not seeking help.
+ - *Open Advocates*: Comfortable discussing mental health, supported by managers & benefits.
+ - *Under-Supported Professionals*: Will engage if support improves; target with benefits & manager training.
+ - *Supported & Aware*: Doing fine; maintain best practices and continuous feedback loops.
     
-                  **Next Steps**
-                   - Integrate HR policy simulations (what-if benefits, leave flexibility).
-                   - Add fairness & bias checks across demographics.
-                   - Connect to anonymized engagement data for drift monitoring.
+ **Next Steps**
+ - Integrate HR policy simulations (what-if benefits, leave flexibility).
+ - Add fairness & bias checks across demographics.
+- Connect to anonymized engagement data for drift monitoring.
 
-                    WITH LOVE OPEN LEARN'S PIONEERS✨
+ WITH LOVE OPEN LEARN'S PIONEERS✨
                 """)
+
 
 
