@@ -293,26 +293,30 @@ elif section == "About":
         if subtitle:
             st.write(subtitle)
 
-    section_title("About this App")
+    section_title("ℹ️ About this App", "Bringing Mental Wellness Insights to Life 💡")
+
     st.write("""
-    **Project Style & Syntax**
-    - Focused on who avoids treatment, policy impacts, and actionable personas.
-    - Models wrapped in sklearn Pipelines for consistency.
-    - Visuals via Plotly, Matplotlib, Seaborn.
-    
-    **Personas**
-    - Silent Sufferers
-    - Open Advocates
-    - Under-Supported Professionals
-    - Supported & Aware
-    
-    **Next Steps**
-    - Add HR policy simulations
-    - Fairness & bias checks
-    - Connect to engagement data
-    
-    - WITH LOVE: OL PIONEER
+    ### ✨ Project Style & Syntax
+    - 🔍 Focused on **who avoids treatment**, **policy impacts**, and **actionable personas**.  
+    - 🛠️ Models wrapped in **scikit-learn Pipelines** for consistency.  
+    - 📊 Visuals powered by **Plotly, Matplotlib, and Seaborn**.  
+
+    ### 🧑‍🤝‍🧑 Personas
+    - 🕵️ *Silent Sufferers*: Low openness/support signals, high risk of not seeking help.  
+    - 📣 *Open Advocates*: Comfortable discussing mental health, strong workplace policies.  
+    - 🏃 *Under-Supported Professionals*: Will engage if support improves, need resources.  
+    - 🌱 *Supported & Aware*: Doing fine; maintain best practices and feedback loops.  
+
+    ### 🚀 Next Steps
+    - 🏢 Add **HR policy simulations** (benefits, leave flexibility).  
+    - ⚖️ Integrate **fairness & bias checks** across demographics.  
+    - 🔗 Connect to anonymized **engagement data** for drift monitoring.  
+
+    ---  
+    💖 *Made with love by Open Learn's Pioneers ✨*
     """)
+
+
 
 
 
