@@ -22,10 +22,10 @@ st.set_page_config(
 SMALL_FIGSIZE = (4, 2.5)  # compact charts
 
 # -------------------- FILE PATHS --------------------
-CSV_PATH = "Cap/data/omsicc.csv"
-CLF_PKL = "Cap/models/classification_model.pkl"
-REG_PKL = "Cap/models/regression_model.pkl"
-CLU_PKL = "Cap/models/clustering_model.pkl"
+CSV_PATH = "data/omsicc.csv"
+CLF_PKL = "models/classification_model.pkl"
+REG_PKL = "models/regression_model.pkl"
+CLU_PKL = "models/clustering_model.pkl"
 
 
 # -------------------- DATA LOADING --------------------
@@ -314,5 +314,6 @@ elif section == "About":
 
                     WITH LOVE OPEN LEARN'S PIONEERS✨
                 """)
+
 
 
