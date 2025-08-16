@@ -313,8 +313,9 @@ elif section == "About":
     - 🔗 Connect to anonymized **engagement data** for drift monitoring.  
 
     ---  
-    💖 *Made with love by Open Learn's Pioneers ✨*
+    💖 *Made with love by Open Learn's Pioneer ✨*
     """)
+
 
 
 
